@@ -55,10 +55,12 @@
 
 ### 🔑 **Demo Credentials**:
 ```
-👑 Admin:    admin@farm.com    / admin123
-🚜 Farmer:   farmer@farm.com   / farmer123  
-🛒 Customer: customer@farm.com / customer123
+👑 Admin:    admin     / admin123  (or admin@farm.com)
+🚜 Farmer:   farmer1   / farmer123  (or farmer@farm.com)
+🛒 Customer: customer1 / customer123 (or customer@farm.com)
 ```
+
+**Note**: You can login with either **username** or **email address**
 
 ### 📝 **Or create your own account**: Click "Create Account" and choose your role!
 

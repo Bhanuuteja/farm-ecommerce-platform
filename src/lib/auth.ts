@@ -18,7 +18,12 @@ export const authConfig: NextAuthOptions = {
 
         try {
           const db = await DatabaseFactory.getAdapter();
-          const user = await db.findUserByUsername(credentials.username as string);
+          
+          // Try to find user by username first, then by email
+          let user = await db.findUserByUsername(credentials.username as string);
+          if (!user) {
+            user = await db.findUserByEmail(credentials.username as string);
+          }
 
           if (!user) {
             return null;
