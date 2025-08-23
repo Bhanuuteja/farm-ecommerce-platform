@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { DatabaseFactory } from '@/lib/database';
 import bcrypt from 'bcryptjs';
 
+export async function GET() {
+  return NextResponse.json({
+    message: 'Production database seeder',
+    instructions: 'Use POST to seed the database with demo data',
+    note: 'This will create admin, farmer, and customer accounts with sample products'
+  });
+}
+
 export async function POST() {
   try {
     const db = await DatabaseFactory.getAdapter();
@@ -120,12 +128,4 @@ export async function POST() {
       error: error.message
     }, { status: 500 });
   }
-}
-
-export async function GET() {
-  return NextResponse.json({
-    message: 'Production database seeder',
-    instructions: 'Use POST to seed the database with demo data',
-    note: 'This will create admin, farmer, and customer accounts with sample products'
-  });
 }
