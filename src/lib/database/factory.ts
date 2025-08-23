@@ -54,7 +54,15 @@ class DatabaseFactory {
   }
 
   private static getConfigFromEnv(): DatabaseConfig {
-    const dbType = (process.env.DATABASE_TYPE || 'mongodb') as DatabaseConfig['type'];
+    // Log environment variables for debugging
+    console.log('Environment check:', {
+      DATABASE_TYPE: process.env.DATABASE_TYPE,
+      NODE_ENV: process.env.NODE_ENV,
+      VERCEL: process.env.VERCEL
+    });
+    
+    const dbType = (process.env.DATABASE_TYPE || 'sqlite') as DatabaseConfig['type'];
+    console.log('Using database type:', dbType);
     
     const configs: Record<string, DatabaseConfig> = {
       mongodb: {
