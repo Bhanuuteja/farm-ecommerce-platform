@@ -104,7 +104,8 @@ class DatabaseFactory {
       sqlite: {
         type: 'sqlite',
         connection: {
-          path: process.env.SQLITE_PATH || './database/farm_ecommerce.db'
+          // Use in-memory database for serverless environments like Vercel
+          path: process.env.VERCEL ? ':memory:' : (process.env.SQLITE_PATH || './database/farm_ecommerce.db')
         },
         options: {
           timeout: 1000,

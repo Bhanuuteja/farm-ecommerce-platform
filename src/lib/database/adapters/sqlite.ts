@@ -18,16 +18,21 @@ export class SQLiteAdapter implements DatabaseAdapter {
     try {
       const dbPath = this.config.connection.path!;
       
-      // Ensure directory exists
-      const dir = path.dirname(dbPath);
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
+      // Only create directories for file-based databases, not in-memory
+      if (dbPath !== ':memory:') {
+        const dir = path.dirname(dbPath);
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir, { recursive: true });
+        }
       }
 
       this.db = new sqlite3.Database(dbPath);
       
-      // Enable foreign keys and WAL mode
+      // Enable foreign keys and WAL mode (skip WAL for in-memory)
       await this.run('PRAGMA foreign_keys = ON');
+      if (dbPath !== ':memory:') {
+        await this.run('PRAGMA journal_mode = WAL');
+      }
       await this.run('PRAGMA journal_mode = WAL');
 
       // Create tables
