@@ -93,37 +93,56 @@ export default function SignUpPage() {
         body: JSON.stringify(formData),
       });
 
+      // Check if response is valid before parsing JSON
+      if (!response.ok) {
+        const text = await response.text();
+        console.error('Registration failed:', {
+          status: response.status,
+          statusText: response.statusText,
+          responseText: text
+        });
+        
+        try {
+          const errorData = JSON.parse(text);
+          toast.error(errorData.error || `Server error (${response.status})`);
+        } catch {
+          toast.error(`Server error (${response.status}): ${response.statusText}`);
+        }
+        return;
+      }
+
       const data = await response.json();
 
-      if (response.ok) {
-        toast.success('Account created successfully! Logging you in...');
-        
-        // Auto-login after successful registration
-        const result = await signIn('credentials', {
-          username: formData.username,
-          password: formData.password,
-          redirect: false,
-        });
+      if (data.error) {
+        toast.error(data.error);
+        return;
+      }
 
-        if (result?.ok) {
-          // Redirect based on role
-          const redirectMap = {
-            admin: '/admin',
-            farmer: '/farmer',
-            customer: '/customer',
-            agent: '/agent'
-          };
-          router.push(redirectMap[formData.role as keyof typeof redirectMap] || '/customer');
-        } else {
-          toast.success('Account created! Please login.');
-          router.push('/');
-        }
+      toast.success('Account created successfully! Logging you in...');
+      
+      // Auto-login after successful registration
+      const result = await signIn('credentials', {
+        username: formData.username,
+        password: formData.password,
+        redirect: false,
+      });
+
+      if (result?.ok) {
+        // Redirect based on role
+        const redirectMap = {
+          admin: '/admin',
+          farmer: '/farmer',
+          customer: '/customer',
+          agent: '/agent'
+        };
+        router.push(redirectMap[formData.role as keyof typeof redirectMap] || '/customer');
       } else {
-        toast.error(data.error || 'Failed to create account');
+        toast.success('Account created! Please login.');
+        router.push('/');
       }
     } catch (error) {
       console.error('Registration error:', error);
-      toast.error('Something went wrong. Please try again.');
+      toast.error('Network error. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
