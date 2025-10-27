@@ -25,14 +25,7 @@
 - **🛒 Shopping Cart**: Persistent cart with real-time updates
 - **📋 Order Management**: Complete order lifecycle tracking
 - **📊 Analytics**: Sales reporting and performance metrics
-- **💳 Secure Checkout**: Protected payment processing
-
-### 🎨 **Modern UI/UX**
-- **🌈 Glass Morphism Design**: Beautiful, modern interface
-- **📱 Fully Responsive**: Mobile-first design approach
-- **⚡ Fast Loading**: Optimized performance with Next.js 14
-- **🔔 Toast Notifications**: Real-time user feedback
-- **✨ Smooth Animations**: Engaging user interactions
+- **💳 Secure Checkout**: Protected payment processin
 
 ---
 
@@ -44,7 +37,6 @@
 | **Backend** | Next.js API Routes, NextAuth.js, Node.js |
 | **Database** | MongoDB, Mongoose ODM, SQLite (dev) |
 | **Authentication** | NextAuth.js, JWT, bcrypt |
-| **UI/UX** | Lucide React, React Hot Toast, Glass Morphism |
 | **Deployment** | Vercel, GitHub Actions |
 
 ---
